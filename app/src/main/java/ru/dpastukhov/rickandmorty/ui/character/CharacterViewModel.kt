@@ -1,13 +1,13 @@
-package ru.dpastukhov.rickandmorty.ui.gallery
+package ru.dpastukhov.rickandmorty.ui.character
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class GalleryViewModel : ViewModel() {
+class CharacterViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is gallery Fragment"
+        value = "This is characters"
     }
     val text: LiveData<String> = _text
 }
