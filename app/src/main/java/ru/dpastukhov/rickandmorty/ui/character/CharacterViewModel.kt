@@ -23,6 +23,8 @@ class CharacterViewModel : BaseViewModel() {
         load()
     }
 
+    var adapter: MutableLiveData<List<Character?>?> = MutableLiveData()
+
     private fun load() {
         subscription = apiService.getAllCharacter()
             .subscribeOn(Schedulers.io())
@@ -48,6 +50,7 @@ class CharacterViewModel : BaseViewModel() {
     }
 
     private fun onRetrievePostListSuccess(it: List<Character?>?) {
+        adapter.value = it
         test.value = it?.get(0)?.name
     }
 
