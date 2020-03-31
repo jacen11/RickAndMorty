@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import kotlinx.android.synthetic.main.fragment_character.txtSearch
+import kotlinx.android.synthetic.main.fragment_character.*
 import ru.dpastukhov.rickandmorty.R
 
 class CharacterFragment : Fragment() {
@@ -22,9 +22,9 @@ class CharacterFragment : Fragment() {
         characterViewModel =
             ViewModelProviders.of(this).get(CharacterViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_character, container, false)
-//        characterViewModel.text.observe(this, Observer {
-//            textСharacter.text = it
-//        })
+        characterViewModel.text.observe(this, Observer {
+            txt2.text = it
+        })
         return root
     }
 }
