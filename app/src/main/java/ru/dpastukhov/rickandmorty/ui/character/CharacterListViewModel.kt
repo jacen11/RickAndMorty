@@ -18,10 +18,10 @@ class CharacterListViewModel : BaseViewModel() {
 
     val characterList: MutableLiveData<List<CharacterDto?>?> = MutableLiveData()
 
-    fun load() {
+    fun load(name:String?=null) {
 
         viewModelScope.launch {
-            characterList.value = characterRepository.getCharacter().results
+            characterList.value = characterRepository.getCharacter(name).results
         }
     }
 
