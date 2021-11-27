@@ -1,8 +1,11 @@
 package ru.dpastukhov.rickandmorty.ui.character
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.launch
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import kotlinx.coroutines.flow.Flow
 import ru.dpastukhov.rickandmorty.data.model.CharacterDto
 import ru.dpastukhov.rickandmorty.data.repo.CharacterRepository
 import ru.dpastukhov.rickandmorty.domain.ApiService
@@ -16,13 +19,13 @@ class CharacterListViewModel : BaseViewModel() {
     @Inject
     lateinit var characterRepository: CharacterRepository
 
-    val characterList: MutableLiveData<List<CharacterDto?>?> = MutableLiveData()
+    var search: String? = null
 
-    fun load(name:String?=null) {
+    private val pagingConfig = PagingConfig(initialLoadSize = 10, pageSize = 6)
 
-        viewModelScope.launch {
-            characterList.value = characterRepository.getCharacter(name).results
-        }
-    }
+    val characterList: Flow<PagingData<CharacterDto>> = Pager(pagingConfig) { CharacterPagingSource(characterRepository, search) }
+            .flow
+            .cachedIn(viewModelScope)
+
 
 }

@@ -5,12 +5,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import ru.dpastukhov.rickandmorty.R
 import ru.dpastukhov.rickandmorty.data.model.CharacterDto
 
-class CharacterAdapter(private val characters: List<CharacterDto?>) : RecyclerView.Adapter<CharacterAdapter.CharacterHolder>() {
+class CharDiffUtil : DiffUtil.ItemCallback<CharacterDto>() {
+    override fun areItemsTheSame(oldItem: CharacterDto, newItem: CharacterDto): Boolean = oldItem == newItem //todo
+    override fun areContentsTheSame(oldItem: CharacterDto, newItem: CharacterDto): Boolean = oldItem == newItem //todo
+}
+
+class CharacterAdapter : PagingDataAdapter<CharacterDto, CharacterAdapter.CharacterHolder>(CharDiffUtil()) {
 
     class CharacterHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var name: TextView = itemView.findViewById(R.id.txtName)
@@ -29,12 +36,11 @@ class CharacterAdapter(private val characters: List<CharacterDto?>) : RecyclerVi
         )
     }
 
-    override fun getItemCount(): Int = characters.size
-
     override fun onBindViewHolder(holder: CharacterHolder, position: Int) {
-        holder.name.text = characters[position]?.name
-        holder.status.text = characters[position]?.status
-        holder.origin.text = characters[position]?.origin?.name
-        Glide.with(holder.image).load(characters[position]?.image).into(holder.image);
+        val item = getItem(position) as CharacterDto
+        holder.name.text = item.name
+        holder.status.text = item.status
+        holder.origin.text = item.origin?.name
+        Glide.with(holder.image).load(item.image).into(holder.image);
     }
 }
