@@ -10,10 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import ru.dpastukhov.rickandmorty.databinding.FragmentCharacterListBinding
 
@@ -33,7 +33,6 @@ class CharacterListFragment : Fragment() {
         binding = FragmentCharacterListBinding.inflate(inflater, container, false)
 
         // viewModel.load()
-
 
 
 //        viewModel.characterList.observe(viewLifecycleOwner, {
@@ -57,7 +56,7 @@ class CharacterListFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 viewModel.search = s?.toString()
                 characterAdapter.refresh()
-            // viewModel.load(s.toString())
+                // viewModel.load(s.toString())
             }
         })
 

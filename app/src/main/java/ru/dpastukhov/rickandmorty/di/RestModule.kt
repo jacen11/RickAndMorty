@@ -10,7 +10,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level.BASIC
 import okhttp3.logging.HttpLoggingInterceptor.Level.BODY
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import ru.dpastukhov.rickandmorty.BuildConfig
@@ -47,7 +46,7 @@ object RestModule {
         .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create(gson))
         .addConverterFactory(MoshiConverterFactory.create(moshi))
-      //  .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        //  .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .client(getClient())
         .build()
 

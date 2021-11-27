@@ -15,14 +15,14 @@ interface AppComponent {
     fun inject(characterViewModel: CharacterListViewModel)
 
     @Component.Builder
-    interface Builder{
+    interface Builder {
         fun build(): AppComponent
 
-        fun restModule(restModule: RestModule):Builder
+        fun restModule(restModule: RestModule): Builder
     }
 }
 
 @Module
-class DomainModule{
+class DomainModule {
 
 }

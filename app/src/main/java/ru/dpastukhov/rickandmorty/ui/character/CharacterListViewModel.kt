@@ -24,8 +24,8 @@ class CharacterListViewModel : BaseViewModel() {
     private val pagingConfig = PagingConfig(initialLoadSize = 10, pageSize = 6)
 
     val characterList: Flow<PagingData<CharacterDto>> = Pager(pagingConfig) { CharacterPagingSource(characterRepository, search) }
-            .flow
-            .cachedIn(viewModelScope)
+        .flow
+        .cachedIn(viewModelScope)
 
 
 }
