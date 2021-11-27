@@ -3,7 +3,7 @@ package ru.dpastukhov.rickandmorty.data.model
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class Character(
+data class CharacterDto(
     var id: Int? = null,
     var name: String? = null,
     var status: String? = null,

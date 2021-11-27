@@ -15,7 +15,7 @@ class RsCharacters {
 
     @SerializedName("results")
     @Expose
-     var results: List<Character?>? = null
+     var results: List<CharacterDto?>? = null
 
 
 }

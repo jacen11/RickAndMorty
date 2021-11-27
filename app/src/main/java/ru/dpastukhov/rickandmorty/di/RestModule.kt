@@ -2,6 +2,7 @@ package ru.dpastukhov.rickandmorty.di
 
 import com.google.gson.GsonBuilder
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -11,10 +12,10 @@ import okhttp3.logging.HttpLoggingInterceptor.Level.BODY
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 import ru.dpastukhov.rickandmorty.BuildConfig
-import ru.dpastukhov.rickandmorty.data.ApiService
-import ru.dpastukhov.rickandmorty.data.model.Character
-import ru.dpastukhov.rickandmorty.data.model.CharacterDeserializer
+import ru.dpastukhov.rickandmorty.data.repo.CharacterRepository
+import ru.dpastukhov.rickandmorty.domain.ApiService
 import javax.inject.Singleton
 
 
@@ -25,8 +26,12 @@ object RestModule {
 
     private val gson = GsonBuilder()
         .setPrettyPrinting()
-      //  .registerTypeAdapter(Character::class.java, CharacterDeserializer())
+        //  .registerTypeAdapter(Character::class.java, CharacterDeserializer())
         .create()
+
+    private val moshi = Moshi.Builder()
+        .add(KotlinJsonAdapterFactory())
+        .build()
 
     private fun getClient(): OkHttpClient {
         val logging = HttpLoggingInterceptor()
@@ -41,12 +46,16 @@ object RestModule {
     fun provideRetrofit(): Retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create(gson))
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .addConverterFactory(MoshiConverterFactory.create(moshi))
+      //  .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .client(getClient())
         .build()
 
     @Provides
     @Singleton
-    fun provideApi(retrofit: Retrofit): ApiService =
-        retrofit.create(ApiService::class.java)
+    fun provideApi(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideRepo(api: ApiService): CharacterRepository = CharacterRepository(api)
 }

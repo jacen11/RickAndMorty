@@ -1,4 +1,4 @@
-package ru.dpastukhov.rickandmorty.adapter
+package ru.dpastukhov.rickandmorty.ui.character
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,9 +8,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import ru.dpastukhov.rickandmorty.R
-import ru.dpastukhov.rickandmorty.data.model.Character
+import ru.dpastukhov.rickandmorty.data.model.CharacterDto
 
-class CharacterAdapter(private val characters: List<Character?>) : RecyclerView.Adapter<CharacterAdapter.CharacterHolder>() {
+class CharacterAdapter(private val characters: List<CharacterDto?>) : RecyclerView.Adapter<CharacterAdapter.CharacterHolder>() {
 
     class CharacterHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var name: TextView = itemView.findViewById(R.id.txtName)

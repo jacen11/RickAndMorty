@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import ru.dpastukhov.rickandmorty.di.AppComponent
 import ru.dpastukhov.rickandmorty.di.DaggerAppComponent
 import ru.dpastukhov.rickandmorty.di.RestModule
-import ru.dpastukhov.rickandmorty.ui.character.CharacterViewModel
+import ru.dpastukhov.rickandmorty.ui.character.CharacterListViewModel
 
 abstract class BaseViewModel : ViewModel() {
 
@@ -19,7 +19,7 @@ abstract class BaseViewModel : ViewModel() {
 
     private fun inject() {
         when (this) {
-            is CharacterViewModel -> injector.inject(this)
+            is CharacterListViewModel -> injector.inject(this)
         }
     }
 }

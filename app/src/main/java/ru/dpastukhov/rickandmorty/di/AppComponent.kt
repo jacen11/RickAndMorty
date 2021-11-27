@@ -1,9 +1,8 @@
 package ru.dpastukhov.rickandmorty.di
 
 import dagger.Component
-import ru.dpastukhov.rickandmorty.MainActivity
-import ru.dpastukhov.rickandmorty.data.model.Character
-import ru.dpastukhov.rickandmorty.ui.character.CharacterViewModel
+import dagger.Module
+import ru.dpastukhov.rickandmorty.ui.character.CharacterListViewModel
 import javax.inject.Singleton
 
 @Component(
@@ -13,7 +12,7 @@ import javax.inject.Singleton
 )
 @Singleton
 interface AppComponent {
-    fun inject(characterViewModel: CharacterViewModel)
+    fun inject(characterViewModel: CharacterListViewModel)
 
     @Component.Builder
     interface Builder{
@@ -21,4 +20,9 @@ interface AppComponent {
 
         fun restModule(restModule: RestModule):Builder
     }
+}
+
+@Module
+class DomainModule{
+
 }
