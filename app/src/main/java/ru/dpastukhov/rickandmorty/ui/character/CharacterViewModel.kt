@@ -56,7 +56,7 @@ class CharacterViewModel : BaseViewModel() {
 
     private fun onRetrievePostListError(it: Throwable) {
         Log.e("Character", it.stackTrace.toString())
-        Log.e("Character", it.message)
+       // Log.e("Character", it.message)
         Log.e("Character", it.localizedMessage)
         test.value = it.message
     }

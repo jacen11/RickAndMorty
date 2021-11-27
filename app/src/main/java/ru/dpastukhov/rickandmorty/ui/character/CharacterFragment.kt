@@ -38,7 +38,7 @@ class CharacterFragment : Fragment() {
             rvCharacters.layoutManager = LinearLayoutManager(context)
             rvCharacters.adapter = CharacterAdapter(it ?: emptyList())
             Log.d("CharacterFragment", "добавление адаптера")
-            Log.d("CharacterFragment", it?.get(0)?.name)
+           // Log.d("CharacterFragment", it?.get(0)?.name)
         })
 
         characterViewModel.text.observe(this, Observer {

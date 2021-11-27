@@ -1,6 +1,7 @@
 package ru.dpastukhov.rickandmorty.di
 
 import com.google.gson.GsonBuilder
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
