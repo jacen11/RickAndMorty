@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -29,24 +30,12 @@ class CharacterListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         binding = FragmentCharacterListBinding.inflate(inflater, container, false)
-
-        // viewModel.load()
-
-
-//        viewModel.characterList.observe(viewLifecycleOwner, {
-//            if (it != null) {
-//                binding.rvCharacters.adapter = CharacterAdapter(it)
-//            }
-//        })
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         val characterAdapter = CharacterAdapter()
 
@@ -56,14 +45,18 @@ class CharacterListFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 viewModel.search = s?.toString()
                 characterAdapter.refresh()
-                // viewModel.load(s.toString())
             }
         })
 
-
-
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             characterAdapter.loadStateFlow.collectLatest { loadStates ->
+                if (loadStates.refresh is LoadState.Error){
+                    //TODO почему то скрытие ресайклера скрывает все остальные элементы
+                    binding.rvCharacters.isVisible = false
+                } else {
+                    binding.rvCharacters.isVisible = true
+                }
+
                 binding.swipeRefresh.isRefreshing = loadStates.refresh is LoadState.Loading
             }
         }
@@ -84,7 +77,6 @@ class CharacterListFragment : Fragment() {
         binding.swipeRefresh.setOnRefreshListener {
             characterAdapter.refresh()
         }
-
 
         binding.rvCharacters.adapter = characterAdapter
     }
