@@ -21,8 +21,3 @@ interface AppComponent {
         fun restModule(restModule: RestModule): Builder
     }
 }
-
-@Module
-class DomainModule {
-
-}
